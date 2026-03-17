@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="hero">
+    <div class="hero-card">
+        <h1>Clinical Laboratory Monitoring</h1>
+        <p>
+            Register patients, upload metabolic lab exams manually or by OCR,
+            and give doctors secure access to dashboards and downloadable reports.
+        </p>
+
+        <div class="hero-actions">
+            <a href="{{ url_for('register') }}" class="btn btn-primary btn-lg">Register Patient</a>
+            <a href="{{ url_for('doctor_login') }}" class="btn btn-warning btn-lg">Medical Database</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

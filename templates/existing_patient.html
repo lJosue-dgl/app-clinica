@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card small-card">
+    <h2>Already Registered?</h2>
+    <p>Enter your national ID to load your patient profile and upload new lab results.</p>
+
+    <form method="POST" class="form-grid">
+        <div class="form-group full-width">
+            <label>National ID</label>
+            <input type="text" name="national_id" required>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Continue</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

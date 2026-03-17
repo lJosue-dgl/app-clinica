@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card">
+    <h2>Manual Lab Upload</h2>
+
+    <div class="patient-info-grid">
+        <div><strong>Name:</strong> {{ patient.full_name }}</div>
+        <div><strong>National ID:</strong> {{ patient.national_id }}</div>
+        <div><strong>Sex:</strong> {{ patient.sex if patient.sex else "-" }}</div>
+        <div><strong>Age:</strong> {{ age if age is not none else "-" }}</div>
+    </div>
+
+    <form method="POST" class="form-grid" style="margin-top: 24px;">
+        <div class="form-group full-width">
+            <label>Exam Date</label>
+            <input type="date" name="exam_date" required>
+        </div>
+
+        <div class="form-group">
+            <label>Fasting Glucose (mg/dL)</label>
+            <input type="text" name="fasting_glucose">
+        </div>
+
+        <div class="form-group">
+            <label>HbA1c (%)</label>
+            <input type="text" name="hba1c">
+        </div>
+
+        <div class="form-group">
+            <label>Triglycerides (mg/dL)</label>
+            <input type="text" name="triglycerides">
+        </div>
+
+        <div class="form-group">
+            <label>HDL (mg/dL)</label>
+            <input type="text" name="hdl">
+        </div>
+
+        <div class="form-group">
+            <label>LDL (mg/dL)</label>
+            <input type="text" name="ldl">
+        </div>
+
+        <div class="form-group">
+            <label>ALT / TGP (U/L)</label>
+            <input type="text" name="alt_tgp">
+        </div>
+
+        <div class="form-group full-width">
+            <label>AST / TGO (U/L)</label>
+            <input type="text" name="ast_tgo">
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-success">Save Results</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

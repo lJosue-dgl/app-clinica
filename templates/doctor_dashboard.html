@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card">
+    <h2>Medical Database</h2>
+
+    {% if patients %}
+    <div class="table-wrapper">
+        <table class="styled-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Full Name</th>
+                    <th>National ID</th>
+                    <th>Birth Date</th>
+                    <th>Sex</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for patient in patients %}
+                <tr>
+                    <td>{{ patient.id }}</td>
+                    <td>{{ patient.full_name }}</td>
+                    <td>{{ patient.national_id }}</td>
+                    <td>{{ patient.birth_date }}</td>
+                    <td>{{ patient.sex }}</td>
+                    <td class="actions">
+                        <a href="{{ url_for('dashboard', patient_id=patient.id) }}" class="btn btn-primary btn-sm">View Dashboard</a>
+                        <a href="{{ url_for('export', patient_id=patient.id) }}" class="btn btn-success btn-sm">Export Excel</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+        <p>No patients registered yet.</p>
+    {% endif %}
+</div>
+{% endblock %}

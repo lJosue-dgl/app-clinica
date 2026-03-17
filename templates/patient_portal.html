@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card">
+    <h2>Patient Portal</h2>
+
+    <div class="patient-info-grid">
+        <div><strong>Name:</strong> {{ patient.full_name }}</div>
+        <div><strong>National ID:</strong> {{ patient.national_id }}</div>
+        <div><strong>Sex:</strong> {{ patient.sex if patient.sex else "-" }}</div>
+        <div><strong>Age:</strong> {{ age if age is not none else "-" }}</div>
+    </div>
+
+    <div class="portal-actions">
+        <a href="{{ url_for('upload_manual', patient_id=patient.id) }}" class="btn btn-primary">Manual Upload</a>
+        <a href="{{ url_for('upload_file', patient_id=patient.id) }}" class="btn btn-warning">Upload Image / PDF</a>
+    </div>
+</div>
+{% endblock %}

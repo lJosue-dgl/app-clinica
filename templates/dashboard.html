@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card">
+    <div class="dashboard-header">
+        <div>
+            <h2>{{ patient.full_name }}</h2>
+            <p>Clinical trend dashboard</p>
+        </div>
+        <a href="{{ url_for('export', patient_id=patient.id) }}" class="btn btn-success">Download Excel</a>
+    </div>
+
+    {% if results %}
+    <div class="chart-grid">
+        <div class="chart-card"><canvas id="glucoseChart"></canvas></div>
+        <div class="chart-card"><canvas id="hba1cChart"></canvas></div>
+        <div class="chart-card"><canvas id="tgChart"></canvas></div>
+        <div class="chart-card"><canvas id="hdlChart"></canvas></div>
+        <div class="chart-card"><canvas id="ldlChart"></canvas></div>
+        <div class="chart-card"><canvas id="altChart"></canvas></div>
+        <div class="chart-card"><canvas id="astChart"></canvas></div>
+    </div>
+
+    <div class="table-wrapper">
+        <table class="styled-table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Glucose</th>
+                    <th>HbA1c</th>
+                    <th>Triglycerides</th>
+                    <th>HDL</th>
+                    <th>LDL</th>
+                    <th>ALT</th>
+                    <th>AST</th>
+                    <th>Source</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for r in results %}
+                <tr>
+                    <td>{{ r.exam_date }}</td>
+                    <td>{{ r.fasting_glucose if r.fasting_glucose is not none else "-" }}</td>
+                    <td>{{ r.hba1c if r.hba1c is not none else "-" }}</td>
+                    <td>{{ r.triglycerides if r.triglycerides is not none else "-" }}</td>
+                    <td>{{ r.hdl if r.hdl is not none else "-" }}</td>
+                    <td>{{ r.ldl if r.ldl is not none else "-" }}</td>
+                    <td>{{ r.alt_tgp if r.alt_tgp is not none else "-" }}</td>
+                    <td>{{ r.ast_tgo if r.ast_tgo is not none else "-" }}</td>
+                    <td>{{ r.source }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+        <p>No lab results found for this patient.</p>
+    {% endif %}
+</div>
+
+<script>
+const dates = {{ chart_dates | tojson }};
+const glucoseValues = {{ glucose_values | tojson }};
+const hba1cValues = {{ hba1c_values | tojson }};
+const tgValues = {{ tg_values | tojson }};
+const hdlValues = {{ hdl_values | tojson }};
+const ldlValues = {{ ldl_values | tojson }};
+const altValues = {{ alt_values | tojson }};
+const astValues = {{ ast_values | tojson }};
+
+function createChart(canvasId, label, values) {
+    new Chart(document.getElementById(canvasId), {
+        type: 'line',
+        data: {
+            labels: dates,
+            datasets: [{
+                label: label,
+                data: values,
+                borderWidth: 2,
+                tension: 0.35
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: true }
+            }
+        }
+    });
+}
+
+createChart("glucoseChart", "Fasting Glucose", glucoseValues);
+createChart("hba1cChart", "HbA1c", hba1cValues);
+createChart("tgChart", "Triglycerides", tgValues);
+createChart("hdlChart", "HDL", hdlValues);
+createChart("ldlChart", "LDL", ldlValues);
+createChart("altChart", "ALT / TGP", altValues);
+createChart("astChart", "AST / TGO", astValues);
+</script>
+{% endblock %}

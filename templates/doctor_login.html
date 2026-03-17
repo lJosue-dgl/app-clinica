@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card small-card">
+    <h2>Doctor Login</h2>
+
+    <form method="POST" class="form-grid">
+        <div class="form-group full-width">
+            <label>Username</label>
+            <input type="text" name="username" required>
+        </div>
+
+        <div class="form-group full-width">
+            <label>Password</label>
+            <input type="password" name="password" required>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Login</button>
+        </div>
+    </form>
+
+    <p class="hint">Default user: <strong>admin</strong> | password: <strong>admin123</strong></p>
+</div>
+{% endblock %}
